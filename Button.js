@@ -1,0 +1,1 @@
+console.log('Button.js now serves as a placeholder. Open Button.html to view the page.');

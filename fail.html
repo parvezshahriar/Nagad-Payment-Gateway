@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed - Nagad Payment Gateway</title>
+    <style>
+        /* GLOBAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* MAIN CONTAINER */
+        .pgw-container {
+            width: 360px;
+            background: linear-gradient(180deg, #8B0000 0%, #D22B2B 100%);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            color: white;
+            padding: 20px;
+            position: relative;
+            text-align: center;
+        }
+
+        /* HEADER */
+        .header-top {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .lang-toggle {
+            background: #b22222;
+            border: 1px solid white;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .lang-toggle:hover {
+            background: #8B0000;
+        }
+
+        .merchant-logo img {
+            width: 80px;
+            margin-bottom: 10px;
+            filter: brightness(0) invert(1);
+        }
+
+        .merchant-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        /* INVOICE DETAILS */
+        .details-box {
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .details-box div {
+            margin-bottom: 8px;
+        }
+
+        .label {
+            font-weight: bold;
+            opacity: 0.95;
+        }
+
+        /* FAIL MESSAGE */
+        .fail-message {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .fail-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .thank-you-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .thank-you-subtext {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        /* BUTTONS */
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: white;
+            color: #8B0000;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #e8e8e8;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* FOOTER LOGO */
+        .footer-logo {
+            margin-top: 10px;
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Fail Page Container -->
+    <div class="pgw-container" id="mainContainer">
+
+        <!-- Header with Language Toggle -->
+        <div class="header-top">
+            <span class="lang-toggle">বাং | Eng</span>
+        </div>
+
+        <!-- Merchant Information -->
+        <div class="merchant-logo">
+            <img src="Untitled design (1).png" alt="Merchant">
+        </div>
+        <div class="merchant-name">Merchant Payment</div>
+
+        <!-- Invoice Details -->
+        <div class="details-box">
+            <div><span class="label">Invoice No:</span> *******************</div>
+            <div><span class="label">Total Amount:</span> BDT *******</div>
+            <div><span class="label">Charge:</span> BDT ***</div>
+        </div>
+
+        <!-- Fail Message -->
+        <div class="fail-icon">✗</div>
+        <div class="thank-you-text">Your payment has failed</div>
+        <div class="thank-you-subtext">Thank you for using Nagad</div>
+
+        <!-- Footer Logo -->
+        <img src="C:\Users\shahriar.shaon\Desktop\Button\image001.gif" class="footer-logo" alt="Nagad">
+
+    </div>
+
+</body>
+</html>

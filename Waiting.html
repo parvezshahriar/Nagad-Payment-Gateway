@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing...</title>
+    <style>
+        /* GLOBAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* GLOBAL STYLES */
+        .loading-card {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            width: 320px;
+        }
+
+        /* SPINNER ANIMATION */
+        .spinner {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 6px solid #e0e0e0;
+            border-top-color: #D22B2B;
+            margin: 0 auto 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* TEXT CONTENT */
+        .message {
+            font-size: 16px;
+            color: #222;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .status-text {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .countdown {
+            font-size: 13px;
+            color: #333;
+        }
+
+        .countdown-number {
+            font-weight: 700;
+            color: #D22B2B;
+            font-size: 16px;
+        }
+
+        .details {
+            font-size: 13px;
+            color: #777;
+            margin-top: 12px;
+        }
+
+        /* IMAGE SECTION */
+        .card-image {
+            width: 185px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Card -->
+    <div class="loading-card">
+        <!-- Card Image -->
+        <img src="Untitled design (1).png" alt="Payment" class="card-image" id="cardImage">
+
+        <!-- Spinner Icon -->
+        <div class="spinner" id="spinnerIcon"></div>
+
+        <!-- Message -->
+        <div class="message" id="messageText">Processing Payment</div>
+
+        <!-- Status Text -->
+        <div class="status-text" id="statusText">Please wait while we process your transaction.</div>
+
+        <!-- Countdown (for Proceed action only) -->
+        <div class="countdown" id="countdownContainer">
+            Completing in <span class="countdown-number" id="secondsCounter">6</span>s
+        </div>
+
+        <!-- Additional Details -->
+        <div class="details" id="detailsText"></div>
+    </div>
+
+    <script>
+        // Initialize the waiting page
+        initializeWaitingPage();
+
+        function initializeWaitingPage() {
+            // Get URL parameters
+            const params = getURLParameters();
+            const action = params.action || 'proceed';
+            const accountNumber = params.number || '';
+
+            // Get HTML elements
+            const messageElement = document.getElementById('messageText');
+            const statusElement = document.getElementById('statusText');
+            const detailsElement = document.getElementById('detailsText');
+            const countdownContainer = document.getElementById('countdownContainer');
+
+            // Handle different actions
+            if (action === 'close') {
+                // User clicked Close - cancel the transaction
+                handleCancelTransaction(messageElement, statusElement, countdownContainer);
+            } else {
+                // User clicked Proceed - process payment
+                handleProcessPayment(messageElement, detailsElement, accountNumber, countdownContainer);
+            }
+        }
+
+        // Handle payment processing (6-second countdown)
+        function handleProcessPayment(messageEl, detailsEl, accountNumber, countdownEl) {
+            messageEl.textContent = 'Processing Payment';
+
+            if (accountNumber) {
+                detailsEl.textContent = 'Account: ' + accountNumber;
+            }
+
+            // Start 6-second countdown
+            let secondsRemaining = 6;
+            const countdownInterval = setInterval(function () {
+                secondsRemaining -= 1;
+                document.getElementById('secondsCounter').textContent = secondsRemaining;
+
+                // When countdown reaches 0
+                if (secondsRemaining <= 0) {
+                    clearInterval(countdownInterval);
+
+                    // Update message to show completion
+                    messageEl.textContent = 'Payment Complete';
+                    document.getElementById('statusText').textContent = 'Your payment has been processed successfully.';
+                    countdownEl.style.display = 'none';
+
+                    // Wait a moment so user sees the completion message
+                    setTimeout(function () {
+                        // Redirect back to success.html with success status
+                        const targetURL = 'success.html?action=completed&status=success&number=' + encodeURIComponent(accountNumber);
+                        window.location.href = targetURL;
+                    }, 700);
+                }
+            }, 1000);
+        }
+
+        // Handle transaction cancellation (immediate redirect)
+        function handleCancelTransaction(messageEl, statusEl, countdownEl) {
+            messageEl.textContent = 'Cancelling Transaction';
+            statusEl.textContent = 'Your transaction is being cancelled.';
+            countdownEl.style.display = 'none';
+
+            // Redirect back immediately without waiting
+            setTimeout(function () {
+                const targetURL = 'fail.html?action=completed&status=cancelled';
+                window.location.href = targetURL;
+            }, 500);
+        }
+
+        // Extract URL query parameters and return as an object
+        function getURLParameters() {
+            const params = {};
+            const queryString = location.search.replace('?', '');
+
+            if (!queryString) {
+                return params;
+            }
+
+            // Split by & and process each parameter
+            queryString.split('&').forEach(function (pair) {
+                if (!pair) return;
+
+                const [key, value] = pair.split('=');
+                params[decodeURIComponent(key)] = value ? decodeURIComponent(value) : '';
+            });
+
+            return params;
+        }
+    </script>
+
+</body>
+</html>
